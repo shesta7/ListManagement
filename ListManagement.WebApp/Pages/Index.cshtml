@@ -1,11 +1,23 @@
 ﻿@page
+@inject ListService ListService;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    var items = ListService.GetListItems();
 }
 
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Мои списки</h1>
+    
+    @foreach (var item in items)
+        {
+                <div class="row">
+                    <a href="@($"/item?id={item.Id}")">
+                    @item.Name
+                    </a>
+                </div>
+         }
+    <a class="link-primary" href="/item">+ Добавить задачу</a>
 </div>
 

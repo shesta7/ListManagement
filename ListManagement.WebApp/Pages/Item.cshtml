@@ -1,9 +1,38 @@
 ﻿@page
-@model PrivacyModel
-@{
-    ViewData["Title"] = "О проекте";
-}
-<h1>@ViewData["Title"]</h1>
+@model ItemModel
 
-<p>Описание курсовой работы</p>
+@if (@Model.IsExist)
+{
+    <form method="POST">
+        <h1>@Model.Item.Name</h1>
+        <input type="hidden" id="id" name="id" value="@Model.Item.Id" />
+        <div class="mb-3">
+            <label class="form-label" for="name">Название задачи</label>
+            <input class="form-control" id="name" name="name" value="@Model.Item.Name" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="description">Описание задачи</label>
+            <textarea rows="5" class="form-control" name="description" id="description">@Model.Item.Description"</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="endDate">Срок выполнения до</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" value="@Model.Item.EndDate?.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div class="mt-5">
+            @if(Model.Item.Id != 0)
+            {
+            <button type="submit" asp-page-handler="Delete" class="btn btn-danger">Удалить</button>
+            }
+            <button type="submit" asp-page-handler="Save" class="btn btn-primary">Сохранить</button>
+        </div>
+    </form>
+}
+else {
+<h3>Такой задачи нет</h3>
+}
+
+
+
+
 
