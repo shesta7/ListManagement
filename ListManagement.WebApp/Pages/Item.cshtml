@@ -3,30 +3,54 @@
 
 @if (@Model.IsExist)
 {
-    <form method="POST">
-        <h1>@Model.Item.Name</h1>
-        <input type="hidden" id="id" name="id" value="@Model.Item.Id" />
-        <div class="mb-3">
-            <label class="form-label" for="name">Название задачи</label>
-            <input class="form-control" id="name" name="name" value="@Model.Item.Name" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="description">Описание задачи</label>
-            <textarea rows="5" class="form-control" name="description" id="description">@Model.Item.Description"</textarea>
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="endDate">Срок выполнения до</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" value="@Model.Item.EndDate?.ToString("yyyy-MM-dd")" />
-        </div>
-
-        <div class="mt-5">
-            @if(Model.Item.Id != 0)
+<form method="POST">
+    <h1>@Model.Item.Name</h1>
+    <input type="hidden" id="id" name="id" value="@Model.Item.Id" />
+    <div class="mb-3">
+        <label class="form-label" for="name">Название задачи</label>
+        <input class="form-control" id="name" name="name" value="@Model.Item.Name" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="group">Группа</label>
+        <select class="form-select" id="group" name="group">
+            <!option value="0" @(Model.Item.GroupId == null ? "selected" : "")>Не сгруппированные задачи</!option>
+            @foreach (var group in Model.Groups)
             {
-            <button type="submit" asp-page-handler="Delete" class="btn btn-danger">Удалить</button>
+                <!option @(group.Id == Model.Item.GroupId ? "selected" : "") value="@group.Id">@group.Name</!option>
             }
-            <button type="submit" asp-page-handler="Save" class="btn btn-primary">Сохранить</button>
-        </div>
-    </form>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="status">Статус</label>
+        <select class="form-select" id="status" name="status">
+            <!option value="0" @(Model.Item.StatusId == null ? "selected" : "")>Нет статуса</!option>
+            @foreach (var status in Model.Statuses)
+            {
+                <!option @(status.Id == Model.Item.StatusId ? "selected" : "") value="@status.Id">@status.Name</!option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="description">Описание задачи</label>
+        <textarea rows="5" class="form-control" name="description" id="description">@Model.Item.Description</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="endDate">Срок выполнения до</label>
+        <input type="date" class="form-control" id="endDate" name="endDate" value="@Model.Item.EndDate?.ToString("yyyy-MM-dd")" />
+    </div>
+
+
+
+
+    <div class="mt-5">
+        @if (Model.Item.Id != 0)
+        {
+            <button type="submit" asp-page-handler="Delete" class="btn btn-danger">Удалить</button>
+        }
+        <button type="submit" asp-page-handler="Save" class="btn btn-primary">Сохранить</button>
+    </div>
+</form>
 }
 else {
 <h3>Такой задачи нет</h3>

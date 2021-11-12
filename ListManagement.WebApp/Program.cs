@@ -1,10 +1,12 @@
-﻿using ListManagement.WebApp.Services;
+﻿using ListManagement.WebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<ListService>();
+builder.Services.AddTransient<ItemRepository>();
+builder.Services.AddTransient<GroupRepository>();
+builder.Services.AddTransient<StatusRepository>();
 
 var app = builder.Build();
 

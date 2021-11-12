@@ -1,0 +1,62 @@
+﻿@page
+@model ListManagement.WebApp.Pages.GroupModel
+@{
+}
+
+@if (Model.State == 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название группы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"></th>
+                <td>
+                    <a class="link-primary" href="/group?edit=true">+ Добавить группу</a>
+                </td>
+            </tr>
+            
+            @foreach (var group in Model.Groups)
+            {
+                <tr>
+                    <th scope="row">@group.Id</th>
+                    <td>
+                        <a href="@($"/group?id={group.Id}&edit=true")">
+                            @group.Name
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    
+}
+@if (Model.State == 1)
+{
+    <form method="POST">
+        <input type="hidden" id="id" name="id" value="@Model.CurrentGroup.Id" />
+        <div class="mb-3">
+            <label class="form-label" for="name">Название группы</label>
+            <input class="form-control" id="name" name="name" value="@Model.CurrentGroup.Name" />
+        </div>
+
+        <div class="mt-5">
+            @if (Model.CurrentGroup.Id != 0)
+            {
+                <button type="submit" asp-page-handler="Delete" class="btn btn-danger">Удалить</button>
+            }
+            <button type="submit" asp-page-handler="Save" class="btn btn-primary">Сохранить</button>
+        </div>
+    </form>
+}
+
+@if (Model.State == 2)
+{<h3>Такой задачи нет</h3>}
+
+
+

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ListManagement.WebApp.Models
 {
-    public class ListItem
+    public class Item
     {
         /// <summary>
         /// Идентификатор
@@ -29,6 +29,14 @@ namespace ListManagement.WebApp.Models
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
 
+
+        /// <summary>
+        /// К какой группе относится задача
+        /// </summary>
+        public int? GroupId { get; set; }
+
+
+        public int? StatusId { get; set; }
     }
 }
 
